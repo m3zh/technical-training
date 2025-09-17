@@ -39,6 +39,7 @@
                 <header>
                     <button name="cancel_btn" type="object" string="Cancel"/>
                     <button name="sold_btn" type="object" string="Sold"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offerReceived,offerAccepted,sold,cancelled"/>
                 </header>
                 <sheet>
                     <group>
@@ -116,6 +117,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <list string="Real Estate">
+                <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="property_type_id"/>
                 <field name="description"/>

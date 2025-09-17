@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="estate_property_menu_root" name="Estate Property">
+    <menuitem id="estate_property_menu_root" name="Estate">
         <menuitem id="estate_property_menu" name="Settings">
             <menuitem id="estate_property_menu_action" name="Estate Property Actions" action="estate_property_action"/>
         </menuitem>

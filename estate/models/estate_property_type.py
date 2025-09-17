@@ -7,6 +7,7 @@ from odoo import fields, models
 class EstatePropertyType(models.Model):
     _name = "estate.property.type"
     _description = "Estate Property Type"
+    _order = "name desc"
 
     name = fields.Char(required=True)
     description = fields.Text()

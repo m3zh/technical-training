@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError, UserError
 from . import estate_property_offer
 from . import estate_property_tag
 from . import estate_property_type
@@ -11,6 +12,9 @@ import datetime
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate Property"
+    _order = "sequence, id desc"
+
+    sequence = fields.Integer('Sequence', default=1, help="Used to order properties.")
 
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     tag_ids = fields.Many2many("estate.property.tag", string="Tag")
@@ -62,23 +66,27 @@ class EstateProperty(models.Model):
     def cancel_btn(self):
         for record in self:
             if record.state == 'sold':
-                return {
-                    'effect': {
-                        'fadeout': 'slow',
-                        'message': 'It is not possible to cancel a SOLD property'
-                    }
-                }
+                raise UserError('It is not possible to cancel a SOLD property')
+                return
             record.state = 'cancelled'
         return True
 
     def sold_btn(self):
         for record in self:
             if record.state == 'cancelled':
-                return {
+                raise UserError('It is not possible to sell a CANCELLED property')
+                return
+            record.state = 'sold'
+            return {
                     'effect': {
                         'fadeout': 'slow',
-                        'message': 'It is not possible to sell a CANCELLED property'
+                        'message': 'Property sold, well done!'
                     }
                 }
-            record.state = 'sold'
-        return True
+
+
+        @api.constrains('selling_price','expected_price')
+        def _check_date_end(self):
+            for record in self:
+                if record.selling_price <= 0 or record.expected_price <= 0:
+                    raise ValidationError("All prices must be POSITIVEand greater than zero!")

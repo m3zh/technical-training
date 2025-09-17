@@ -7,6 +7,8 @@ from odoo import fields, models
 class EstatePropertyTag(models.Model):
     _name = "estate.property.tag"
     _description = "Estate Property Tag"
+    _order = "name desc"
+    _sql_constraints = [("name","UNIQUE(name)","You cannot create two tags with the same name."]
 
     name = fields.Char(required=True)
     '''

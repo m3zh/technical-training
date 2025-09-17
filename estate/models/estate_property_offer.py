@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, exceptions
+from odoo import fields, models
+from odoo.exceptions import ValidationError, UserError
 from . import estate_property
 
 
 class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
     _description = "Estate Property offer"
+    _order = "price desc"
 
     price = fields.Float(required=True)
     property_id = fields.Many2one("estate.property", string="Property", required=True)
@@ -21,7 +23,7 @@ class EstatePropertyOffer(models.Model):
     def accept_btn(self):
         for record in self.property_id.offer_ids:
             if record.status == 'accepted':
-                raise exceptions.UserError('An offer was already accepted for this real estate, SORRY!')
+                raise UserError('An offer was already accepted for this real estate, SORRY!')
                 return False
         for record in self:
             record.status = 'accepted'
@@ -43,3 +45,8 @@ class EstatePropertyOffer(models.Model):
             record.status = 'refused'
         return True
 
+        @api.constrains('price')
+        def _check_date_end(self):
+            for record in self:
+                if record.price <= 0:
+                    raise ValidationError("All prices must be POSITIVEand greater than zero!")
