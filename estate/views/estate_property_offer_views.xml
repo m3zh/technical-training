@@ -18,6 +18,10 @@
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <form string="Estate Property Offer">
+                <header>
+                    <button name="accept_btn" type="object" string="Accept"/>
+                    <button name="refuse_btn" type="object" string="Refuse"/>
+                </header>
                 <sheet>
                     <notebook>
                         <page string="Offers">
@@ -39,6 +43,8 @@
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="status"/>
+                <button name="accept_btn" type="object" string="Accept" icon="fa-check"/>
+                <button name="refuse_btn" type="object" string="Refuse" icon="fa-ban"/>
             </list>
         </field>
     </record>

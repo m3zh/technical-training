@@ -15,8 +15,8 @@ class EstateProperty(models.Model):
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     tag_ids = fields.Many2many("estate.property.tag", string="Tag")
     property_type_id = fields.Many2one("estate.property.type", string="Type")
-    buyer_id = fields.Many2one("res.users", string="Buyer")
-    salesperson_id = fields.Many2one("res.partner", string="Salesperson", default=lambda self:self.env.user)
+    buyer_id = fields.Many2one("res.partner", string="Buyer")
+    salesperson_id = fields.Many2one("res.users", string="Salesperson", default=lambda self:self.env.user)
 
     active = fields.Boolean(default=True)        
     name = fields.Char(required=True, default="Unknown")
@@ -40,7 +40,6 @@ class EstateProperty(models.Model):
     total_area = fields.Integer(compute="_compute_total_area")
     best_price = fields.Float(compute="_compute_best_price")
 
-
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
         for record in self:
@@ -59,3 +58,27 @@ class EstateProperty(models.Model):
         else:
             self.garden_orientation = ""
             self.garden_area = 0
+
+    def cancel_btn(self):
+        for record in self:
+            if record.state == 'sold':
+                return {
+                    'effect': {
+                        'fadeout': 'slow',
+                        'message': 'It is not possible to cancel a SOLD property'
+                    }
+                }
+            record.state = 'cancelled'
+        return True
+
+    def sold_btn(self):
+        for record in self:
+            if record.state == 'cancelled':
+                return {
+                    'effect': {
+                        'fadeout': 'slow',
+                        'message': 'It is not possible to sell a CANCELLED property'
+                    }
+                }
+            record.state = 'sold'
+        return True
