@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="estate_property_menu_root" name="EstateProperty">
-        <menuitem id="test_first_level_menu" name="First Level">
-            <menuitem id="estate_property_menu_action" name="Properties" action="estate_property_action"/>
+    <menuitem id="estate_property_menu_root" name="Estate Property">
+        <menuitem id="estate_property_menu" name="Settings">
+            <menuitem id="estate_property_menu_action" name="Estate Property Actions" action="estate_property_action"/>
         </menuitem>
     </menuitem>
 </odoo>

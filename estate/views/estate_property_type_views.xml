@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <odoo>
 
-        <record id="estate_property_type_view_search" model="ir.ui.view">
+    <record id="estate_property_type_view_search" model="ir.ui.view">
         <field name="name">estate.property.type.view.search</field>
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
             <search string="Estate Property Type">
-                <field name="type"/>
                 <field name="description"/>
             </search>
         </field>
@@ -18,11 +17,6 @@
         <field name="arch" type="xml">
             <form string="Estate Property Type">
                 <sheet>
-                    <group>
-                        <group>
-                            <field name="type"/>
-                        </group>
-                    </group>
                     <notebook>
                         <page string="Description">
                             <field name="description"/>
@@ -38,7 +32,6 @@
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
             <list string="Real Estate">
-                <field name="type"/>
                 <field name="description"/>
             </list>
         </field>
