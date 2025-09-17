@@ -27,9 +27,9 @@ class EstateProperty(models.Model):
     expected_price = fields.Float()
     selling_price = fields.Float(readonly=True,copy=False)
     living_area = fields.Integer(default=55)
-    garden_area = fields.Integer(default=10)
     bedrooms = fields.Integer(default=2)
     garden = fields.Boolean()
+    garden_area = fields.Integer()
     garden_orientation = fields.Selection([('north','North'), ('south','South'),('east','East'),('west','West')])
     state = fields.Selection(
         [('new','New'), ('offerReceived','Offer Received'),('offerAccepted','Offer Accepted'),('sold','Sold'), ('cancelled','Cancelled')],
@@ -49,9 +49,13 @@ class EstateProperty(models.Model):
     @api.depends('offer_ids.price')
     def _compute_best_price(self):
         for record in self:
-            record.best_price = max(record.mapped('offer_ids.price'))
+            record.best_price = max(record.mapped('offer_ids.price'), default=0)
 
-    @api.onchange("partner_id")
-        def _onchange_partner_id(self):
-            self.name = "Document for %s" % (self.partner_id.name)
-            self.description = "Default description for %s" % (self.partner_id.name)
+    @api.onchange("garden")
+    def _onchange_garden_info(self):
+        if self.garden == True:
+            self.garden_orientation = "north"
+            self.garden_area = 10
+        else:
+            self.garden_orientation = ""
+            self.garden_area = 0

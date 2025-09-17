@@ -10,6 +10,8 @@
                 <field name="description"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
+                <field name="garden"/>
+                <field name="garden_orientation"/>
                 <field name="living_area" string="Living Area (sqm)"/>
                 <field name="garden_area" string="Garden Area (sqm)"/>
                 <field name="total_area" string="Total Area (sqm)"/>
@@ -75,6 +77,10 @@
                                     <field name="bedrooms"/> 
                                 </group>
                                 <group>
+                                    <field name="garden"/>
+                                    <field name="garden_orientation"/>
+                                </group>
+                                <group>
                                     <field name="living_area" string="Living Area (sqm)"/>
                                 </group>
                                 <group>
@@ -112,6 +118,8 @@
                 <field name="best_price"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
+                <field name="garden"/>
+                <field name="garden_orientation"/>
                 <field name="living_area" string="Living Area (sqm)"/>
                 <field name="garden_area" string="Garden Area (sqm)"/>
                 <field name="total_area" string="Total Area (sqm)"/>
